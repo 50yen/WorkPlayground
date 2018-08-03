@@ -15,22 +15,51 @@ $(function() {
         // キーコード13(=Enter)のとき
         if (c == 13) {
             // 現在のタブインデックス番号を取得
-            var tabindex = $( this ).attr( "tabindex" );
-            if( typeof( tabindex ) != "undefined" && $( "[tabindex='" + ( tabindex - 0 + 1 ) + "']" ).length > 0 ){
-                $( "[tabindex='" + ( tabindex - 0 + 1 ) + "']" ).focus();
-            }else{
-            var index = $(oObject).index(this); // indexは0～
+            var tabindex = $(this).attr("tabindex");
+            // 現在のタブインデックス番号が存在する
+            if (typeof(tabindex) != "undefined") {
+                var index = tabindex - 0; // indexは0～
+                var nLength = $("[tabindex]'").length;
+                for (i = index; i < nLength; i++) {
+                    var j = 1;
+                    var cNext;
+                    while (j < 100) {
+                        cNext = e.shiftKey ? $("[tabindex='" + (index - j) + "']") : $("[tabindex='" + (index + j) + "']");
+                        if(cNext.length){
+                            // ③ 止まってはいけいない属性 readonly
+                            if (cNext.attr("readonly") == "readonly") {
+                                j++;
+                                continue;
+                            }
+                            // ③ 止まってはいけいない属性 disabled
+                            else if (cNext.prop("disabled") == true) {
+                                j++;
+                                continue;
+                            }
+                            else {
+                                cNext.focus();
+                                break;
+                            }
+                        }
+                    }
+                }
+
+            } else {
+
+            }
+        } else {
+            var index = $(elements).index(this); // indexは0～
             var cNext = "";
-            var nLength = $(oObject).length;
+            var nLength = $(elements).length;
             for (i = index; i < nLength; i++) {
                 cNext = e.shiftKey ? ":lt(" + index + "):last" : ":gt(" + index + "):first";
                 // ③ 止まってはいけいない属性 readonly
-                if ($(oObject + cNext).attr("readonly") == "readonly") {
+                if ($(elements + cNext).attr("readonly") == "readonly") {
                     if (e.shiftKey) index--; // １つ前
                     else index++; // 次へ
                 }
                 // ③ 止まってはいけいない属性 disabled
-                else if ($(oObject + cNext).prop("disabled") == true) {
+                else if ($(elements + cNext).prop("disabled") == true) {
                     if (e.shiftKey) index--; // １つ前
                     else index++; // 次へ
                 } else break;
@@ -47,10 +76,10 @@ $(function() {
                     cNext = ":eq(" + (nLength - 1) + ")";
                 }
             }
-            if ($(oObject).attr("type") == "button") {
+            if ($(elements).attr("type") == "button") {
                 console.log("Button");
             } else {
-                $(oObject + cNext).focus();
+                $(elements + cNext).focus();
                 console.log("TEST");
                 e.preventDefault() //規定の動作をキャンセルするため、こちらのメソッドを呼ぶ。
             }
