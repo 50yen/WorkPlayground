@@ -5,6 +5,11 @@
   font: 0.8rem sans-serif;
 }
 
+input:disabled {
+    background-image: none;
+    background-color: #ccc;
+    border-color: #ccc;
+}
 body {
   background: #ffd;
 }
