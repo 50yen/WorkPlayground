@@ -19,13 +19,13 @@ $(function() {
             // 現在のタブインデックス番号が存在する
             if (typeof(tabindex) != "undefined") {
                 var index = tabindex - 0; // indexは0～
-                var nLength = $("[tabindex]'").length;
+                var nLength = $("[tabindex]").length;
                 for (i = index; i < nLength; i++) {
                     var j = 1;
                     var cNext;
                     while (j < 100) {
                         cNext = e.shiftKey ? $("[tabindex='" + (index - j) + "']") : $("[tabindex='" + (index + j) + "']");
-                        if(cNext.length){
+                        if (cNext.length) {
                             // ③ 止まってはいけいない属性 readonly
                             if (cNext.attr("readonly") == "readonly") {
                                 j++;
@@ -35,52 +35,51 @@ $(function() {
                             else if (cNext.prop("disabled") == true) {
                                 j++;
                                 continue;
-                            }
-                            else {
+                            } else {
                                 cNext.focus();
                                 break;
                             }
                         }
                     }
                 }
-
             } else {
-
-            }
-        } else {
-            var index = $(elements).index(this); // indexは0～
-            var cNext = "";
-            var nLength = $(elements).length;
-            for (i = index; i < nLength; i++) {
-                cNext = e.shiftKey ? ":lt(" + index + "):last" : ":gt(" + index + "):first";
-                // ③ 止まってはいけいない属性 readonly
-                if ($(elements + cNext).attr("readonly") == "readonly") {
-                    if (e.shiftKey) index--; // １つ前
-                    else index++; // 次へ
+                var index = $(targetElm).index(this); // indexは0～
+                var cNext = "";
+                var nLength = $(targetElm).length;
+                for (i = index; i < nLength; i++) {
+                    cNext = e.shiftKey ? ":lt(" + index + "):last" : ":gt(" + index + "):first";
+                    // ③ 止まってはいけいない属性 readonly
+                    if ($(targetElm).filter(cNext).attr("readonly") == "readonly") {
+                        if (e.shiftKey) {
+                            index--; // １つ前
+                        } else {
+                            index++; // 次へ
+                        }
+                    }
+                    // ③ 止まってはいけいない属性 disabled
+                    else if ($(targetElm).filter(cNext).prop("disabled") == true) {
+                        if (e.shiftKey) {
+                            index--; // １つ前
+                        } else {
+                            index++; // 次へ
+                        }
+                    } else {
+                        break;
+                    }
                 }
-                // ③ 止まってはいけいない属性 disabled
-                else if ($(elements + cNext).prop("disabled") == true) {
-                    if (e.shiftKey) index--; // １つ前
-                    else index++; // 次へ
-                } else break;
-            }
-            if (index == nLength - 1) {
-                if (!e.shiftKey) {
-                    // 最後の項目なら、最初に移動。
-                    cNext = ":eq(0)";
+                if (index == nLength - 1) {
+                    if (!e.shiftKey) {
+                        // 最後の項目なら、最初に移動。
+                        cNext = ":eq(0)";
+                    }
                 }
-            }
-            if (index == 0) {
-                if (e.shiftKey) {
-                    // 最初の項目なら、最後に移動。
-                    cNext = ":eq(" + (nLength - 1) + ")";
+                if (index == 0) {
+                    if (e.shiftKey) {
+                        // 最初の項目なら、最後に移動。
+                        cNext = ":eq(" + (nLength - 1) + ")";
+                    }
                 }
-            }
-            if ($(elements).attr("type") == "button") {
-                console.log("Button");
-            } else {
-                $(elements + cNext).focus();
-                console.log("TEST");
+                $(targetElm).filter(cNext).focus();
                 e.preventDefault() //規定の動作をキャンセルするため、こちらのメソッドを呼ぶ。
             }
         }
