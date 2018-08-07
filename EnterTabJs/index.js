@@ -15,33 +15,77 @@ $(function() {
         // キーコード13(=Enter)のとき
         if (c == 13) {
             // 現在のタブインデックス番号を取得
-            var tabindex = $(this).attr("tabindex");
+            var curentTabIdx = $(this).attr("tabindex");
             // 現在のタブインデックス番号が存在する
-            if (typeof(tabindex) != "undefined") {
-                var index = tabindex - 0; // indexは0～
-                var nLength = $("[tabindex]").length;
-                for (i = index; i < nLength; i++) {
-                    var j = 1;
-                    var cNext;
-                    while (j < 100) {
-                        cNext = e.shiftKey ? $("[tabindex='" + (index - j) + "']") : $("[tabindex='" + (index + j) + "']");
-                        if (cNext.length) {
-                            // ③ 止まってはいけいない属性 readonly
-                            if (cNext.attr("readonly") == "readonly") {
-                                j++;
-                                continue;
-                            }
-                            // ③ 止まってはいけいない属性 disabled
-                            else if (cNext.prop("disabled") == true) {
-                                j++;
-                                continue;
-                            } else {
-                                cNext.focus();
-                                break;
-                            }
+            if (typeof(curentTabIdx) != "undefined") {
+                // タブインデックスのリストを作成
+                var tabIdxAllCnt = $("[tabindex]").length; // 全体のタブインデックス数
+                var tabIdxAllObj = $("[tabindex]"); // 全体のタブインデックスを持つオブジェクトの配列
+                var tabIdxLst = []; // タブインデックスの番号リスト
+                for (listCnt = 0; listCnt < tabIdxAllCnt; listCnt++) {
+                    // タブインデックス番号のリストを生成
+                    tabIdxLst.push(tabIdxAllObj[listCnt].tabIndex);
+                }
+                // ソートを行う
+                tabIdxLst.sort(function(a, b) {
+                    if (a < b) return -1;
+                    if (a > b) return 1;
+                    return 0;
+                });
+                // 現在のタブインデックス番号が全体の何番目か算出
+                var currentPos = tabIdxLst.indexOf(curentTabIdx - 0);
+                // 次のインデックス番号の位置を特定
+                var nextPos = currentPos;
+                var pos = e.shiftKey ? 1 : -1;
+                // 最大と最初は位置探索しない
+                while(nextPos > 0 && nextPos < tabIdxAllCnt - 1){
+                    // 次のタブインデックス番号の取得
+                    var nextTabIdx = tabIdxLst[currentPos + pos];
+                    // ③ 止まってはいけいない属性 readonly
+                    if ($("[tabindex=" + nextTabIdx + "]").attr("readonly") == "readonly") {
+                        if (e.shiftKey) {
+                            pos--; // １つ前
+                        } else {
+                            pos++; // 次へ
                         }
                     }
+                    // ③ 止まってはいけいない属性 disabled
+                    else if ($("[tabindex=" + nextTabIdx + "]").prop("disabled") == true) {
+                        if (e.shiftKey) {
+                            pos--; // １つ前
+                        } else {
+                            pos++; // 次へ
+                        }
+                    } else {
+                        // 次のタブインデックス番号の位置を決定
+                        nextPos = currentPos + pos;
+                        break;
+                    }
                 }
+
+                if (pos < tabIndexList.length - 1){
+
+                }
+
+
+                for (i = index; i < nLength; i++) {
+                    cNext = e.shiftKey ? ":lt(" + index + "):last" : ":gt(" + index + "):first";
+
+                }
+                if (index == nLength - 1) {
+                    if (!e.shiftKey) {
+                        // 最後の項目なら、最初に移動。
+                        cNext = ":eq(0)";
+                    }
+                }
+                if (index == 0) {
+                    if (e.shiftKey) {
+                        // 最初の項目なら、最後に移動。
+                        cNext = ":eq(" + (nLength - 1) + ")";
+                    }
+                }
+                $("[tabindex]").filter(cNext).focus();
+                e.preventDefault()
             } else {
                 var index = $(targetElm).index(this); // indexは0～
                 var cNext = "";
