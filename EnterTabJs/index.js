@@ -36,41 +36,69 @@ $(function() {
                 var currentPos = tabIdxLst.indexOf(curentTabIdx - 0);
                 // 次のインデックス番号の位置を特定
                 var nextPos = currentPos;
-                var pos = e.shiftKey ? 1 : -1;
+                var pos = e.shiftKey ? -1 : 1;
                 // 最大と最初は位置探索しない
-                while(nextPos > 0 && nextPos < tabIdxAllCnt - 1){
+                do{
                     // 次のタブインデックス番号の取得
                     var nextTabIdx = tabIdxLst[currentPos + pos];
-                    // ③ 止まってはいけいない属性 readonly
-                    if ($("[tabindex=" + nextTabIdx + "]").attr("readonly") == "readonly") {
-                        if (e.shiftKey) {
-                            pos--; // １つ前
+                    if(nextTabIdx === undefined){
+                        // 位置が最初または最後の場合
+                        break;
+                    } else {
+                        // ③ 止まってはいけいない属性 readonly
+                        if ($("[tabindex=" + nextTabIdx + "]").attr("readonly") == "readonly") {
+                            if (e.shiftKey) {
+                                pos--; // １つ前
+                            } else {
+                                pos++; // 次へ
+                            }
+                        }
+                        // ③ 止まってはいけいない属性 disabled
+                        else if ($("[tabindex=" + nextTabIdx + "]").prop("disabled") == true) {
+                            if (e.shiftKey) {
+                                pos--; // １つ前
+                            } else {
+                                pos++; // 次へ
+                            }
                         } else {
-                            pos++; // 次へ
+                            // 次のタブインデックス番号の位置を決定し、フォーカス移動
+                            $("[tabindex=" + nextTabIdx + "]").focus();
+                            e.preventDefault();
+                            return;
+                        }
+                    }
+                } while(currentPos + pos > 0 && currentPos + pos <= tabIdxAllCnt);
+                // タブインデックスの移動先が存在しない場合
+                var index = $(targetElm).index(this); // indexは0～
+                var cNext = "";
+                var nLength = $(targetElm).length;
+                for (i = index; i < nLength; i++) {
+                    cNext = e.shiftKey ? ":lt(" + index + "):last" : ":gt(" + index + "):first";
+                    // ③ 止まってはいけいない属性 readonly
+                    if ($(targetElm).filter(cNext).attr("readonly") == "readonly") {
+                        if (e.shiftKey) {
+                            index--; // １つ前
+                        } else {
+                            index++; // 次へ
                         }
                     }
                     // ③ 止まってはいけいない属性 disabled
-                    else if ($("[tabindex=" + nextTabIdx + "]").prop("disabled") == true) {
+                    else if ($(targetElm).filter(cNext).prop("disabled") == true) {
                         if (e.shiftKey) {
-                            pos--; // １つ前
+                            index--; // １つ前
                         } else {
-                            pos++; // 次へ
+                            index++; // 次へ
+                        }
+                    }// ③ 止まってはいけいない属性 tabindex あり
+                    else if ($(targetElm).filter(cNext).attr("tabindex") !== undefined) {
+                        if (e.shiftKey) {
+                            index--; // １つ前
+                        } else {
+                            index++; // 次へ
                         }
                     } else {
-                        // 次のタブインデックス番号の位置を決定
-                        nextPos = currentPos + pos;
                         break;
                     }
-                }
-
-                if (pos < tabIndexList.length - 1){
-
-                }
-
-
-                for (i = index; i < nLength; i++) {
-                    cNext = e.shiftKey ? ":lt(" + index + "):last" : ":gt(" + index + "):first";
-
                 }
                 if (index == nLength - 1) {
                     if (!e.shiftKey) {
@@ -84,8 +112,8 @@ $(function() {
                         cNext = ":eq(" + (nLength - 1) + ")";
                     }
                 }
-                $("[tabindex]").filter(cNext).focus();
-                e.preventDefault()
+                $(targetElm).filter(cNext).focus();
+                e.preventDefault;
             } else {
                 var index = $(targetElm).index(this); // indexは0～
                 var cNext = "";
