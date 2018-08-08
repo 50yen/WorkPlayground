@@ -1,10 +1,24 @@
-* {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: 0.8rem sans-serif;
-}
 
-body {
-  background: #ffd;
+
+.btn_orange {
+    display:block;
+    width: 150px;
+    height:40px;
+    line-height: 70px;
+    color: #FFF;
+    text-decoration: none;
+    text-align: center;
+    background-color: #f39800; /*ボタン色*/
+    border-radius: 5px; /*角丸*/
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.btn_orange:enabled:active:not([readonly="readonly"]) {
+    background-color: #f9c500;
+}
+.btn_orange:disabled {
+    opacity: 0.5;
+}
+.btn_orange[readonly="readonly"] {
+    opacity: 0.5;
 }
