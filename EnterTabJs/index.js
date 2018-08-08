@@ -38,10 +38,10 @@ $(function() {
                 var nextPos = currentPos;
                 var pos = e.shiftKey ? -1 : 1;
                 // 最大と最初は位置探索しない
-                do{
+                do {
                     // 次のタブインデックス番号の取得
                     var nextTabIdx = tabIdxLst[currentPos + pos];
-                    if(nextTabIdx === undefined){
+                    if (nextTabIdx === undefined) {
                         // 位置が最初または最後の場合
                         break;
                     } else {
@@ -67,7 +67,7 @@ $(function() {
                             return;
                         }
                     }
-                } while(currentPos + pos > 0 && currentPos + pos <= tabIdxAllCnt);
+                } while (currentPos + pos > 0 && currentPos + pos <= tabIdxAllCnt);
                 // タブインデックスの移動先が存在しない場合
                 var index = $(targetElm).index(this); // indexは0～
                 var cNext = "";
@@ -89,7 +89,7 @@ $(function() {
                         } else {
                             index++; // 次へ
                         }
-                    }// ③ 止まってはいけいない属性 tabindex あり
+                    } // ③ 止まってはいけいない属性 tabindex あり
                     else if ($(targetElm).filter(cNext).attr("tabindex") !== undefined) {
                         if (e.shiftKey) {
                             index--; // １つ前
@@ -103,13 +103,35 @@ $(function() {
                 if (index == nLength - 1) {
                     if (!e.shiftKey) {
                         // 最後の項目なら、最初に移動。
-                        cNext = ":eq(0)";
+                        for (i = 0; i < nLength; i++) {
+                            cNext = ":eq(" + (i) + ")";
+                            // 最初の要素もチェック
+                            if ($(targetElm).filter(cNext).attr("readonly") == "readonly" ||
+                                $(targetElm).filter(cNext).prop("disabled") == true ||
+                                $(targetElm).filter(cNext).attr("tabindex") !== undefined) {
+                                // 最初の要素から1つ後に
+                            } else {
+                                // 問題なければ移動
+                                break;
+                            }
+                        }
                     }
                 }
                 if (index == 0) {
                     if (e.shiftKey) {
                         // 最初の項目なら、最後に移動。
-                        cNext = ":eq(" + (nLength - 1) + ")";
+                        for (i = 1; i < nLength; i++) {
+                            cNext = ":eq(" + (nLength - i) + ")";
+                            // 最後の要素もチェック
+                            if ($(targetElm).filter(cNext).attr("readonly") == "readonly" ||
+                                $(targetElm).filter(cNext).prop("disabled") == true ||
+                                $(targetElm).filter(cNext).attr("tabindex") !== undefined) {
+                                // 最後の要素から1つ前に
+                            } else {
+                                // 問題なければ移動
+                                break;
+                            }
+                        }
                     }
                 }
                 $(targetElm).filter(cNext).focus();
@@ -142,13 +164,33 @@ $(function() {
                 if (index == nLength - 1) {
                     if (!e.shiftKey) {
                         // 最後の項目なら、最初に移動。
-                        cNext = ":eq(0)";
+                        for (i = 0; i < nLength; i++) {
+                            cNext = ":eq(" + (i) + ")";
+                            // 最初の要素もチェック
+                            if ($(targetElm).filter(cNext).attr("readonly") == "readonly" ||
+                                $(targetElm).filter(cNext).prop("disabled") == true) {
+                                // 最初の要素から1つ後に
+                            } else {
+                                // 問題なければ移動
+                                break;
+                            }
+                        }
                     }
                 }
                 if (index == 0) {
                     if (e.shiftKey) {
                         // 最初の項目なら、最後に移動。
-                        cNext = ":eq(" + (nLength - 1) + ")";
+                        for (i = 1; 1 < nLength; i++) {
+                            cNext = ":eq(" + (nLength - i) + ")";
+                            // 最後の要素もチェック
+                            if ($(targetElm).filter(cNext).attr("readonly") == "readonly" ||
+                                $(targetElm).filter(cNext).prop("disabled") == true) {
+                                // 最後の要素から1つ前に
+                            } else {
+                                // 問題なければ移動
+                                break;
+                            }
+                        }
                     }
                 }
                 $(targetElm).filter(cNext).focus();
