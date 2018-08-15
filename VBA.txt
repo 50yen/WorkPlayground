@@ -1,0 +1,61 @@
+
+Sub writeCSV()
+ 
+Dim ws As Worksheet
+Set ws = 
+ 
+Dim csvFile As String
+Dim fileName AS string
+fileName = ws.Name + ".csv"
+csvFile = ActiveWorkbook.Path & fileName
+ 
+Open csvFile For Output As #1
+ 
+Dim i As Long, j As Long
+Dim columType() as String
+Dim chkStr As String
+i = 1
+ 
+Do While ws.Cells(i, 1).Value <> ""
+ 
+	j = 1
+	Do While ws.Cells(i, j+1).Value <> ""
+
+		if i = 1 Or columType(j)= "VARCHAR" then
+			Print #1, """" & ws.Cells(i, j).Value & """,";
+		End if
+
+		if i = 2 then
+			chkString = ws.Cells(i, j).Value
+			ReDim Preserve columType(j)
+			columType(j) = chkString
+		End if
+ 
+		if i > 2 And columType(j)<> "VARCHAR"
+			Print #1, ws.Cells(i, j).Value & ",";
+		End if
+		j = j + 1
+ 	Loop
+ 	if i = 1 Or (i>2 And columType(j)= "VARCHAR" )then
+		Print #1, """" & ws.Cells(i, j).Value & """,";
+	End if
+
+	if i = 2 then
+		chkString = ws.Cells(i, j).Value
+		ReDim Preserve columType(j)
+		columType(j) = chkString
+	End if
+ 
+	if i > 2 And columType(j)<> "VARCHAR"
+		Print #1, ws.Cells(i, j).Value & ",";
+	End if
+	Print #1, ws.Cells(i, j).Value & vbCr;
+	i = i + 1
+
+Loop
+ 
+Close #1
+ 
+MsgBox fileName + "に書き出しました"
+ 
+End Sub
