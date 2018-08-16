@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.ui.theme" value="simple" />
+	<!-- プロパティファイルの指定 使用しない -->
+	<!-- <constant name="struts.custom.i18n.resources" value="ac" /> -->
+
+	<package name="default" namespace="/" extends="struts-default">
+
+		<default-action-ref name="index" />
+
+		<global-results>
+			<!-- ログイン画面表示 -->
+			<result name="TOLOGIN" type="redirectAction">aclog01DISP_V</result>
+			<!-- 障害画面表示 -->
+			<result name="GLOBALERROR">/jsp/ac/Acsyserr.jsp</result>
+		</global-results>
+
+		<action name="index">
+			<result>/index.jsp</result>
+		</action>
+
+		<action name="error">
+			<result>/jsp/ac/Acsyserr.jsp</result>
+		</action>
+
+
+		<!-- ログイン -->
+		<action name="aclog01*_*" class="jp.co.hitachi.a.c.log.action.Aclog01Action">
+			<param name="event">{1}</param>
+			<param name="gid">aclog01</param>
+			<param name="trans">{2}</param>
+			<result name="DISP">/jsp/ac/Aclog01.jsp</result>
+			<result name="LOGIN" type="redirectAction">actop01DISP_V</result>
+			<result name="CHANGEPWD" type="redirectAction"></result>
+		</action>
+
+		<!-- TOP画面 -->
+		<action name="actop01*_*" class="jp.co.hitachi.a.c.top.action.Actop01Action">
+			<param name="event">{1}</param>
+			<param name="gid">actop01</param>
+			<param name="trans">{2}</param>
+			<result name="DISP">/jsp/ac/Actop01.jsp</result>
+			<result name="LOGOUT" type="redirectAction">actop01LOGOUT_V</result>
+			<result name="GOTOACTMP01" type="redirectAction">actmp01DISP_V</result>
+			<result name="GOTOACTMP02" type="redirectAction">actmp02DISP_V</result>
+			<result name="GOTOACTMP03" type="redirectAction">actmp03DISP_V</result>
+		</action>
+
+<!-- //////////////////////////////////// ↓開発用↓ /////////////////////////////////////////////////////////////// -->
+		<!-- 基本テンプレート -->
+		<action name="actmp01*_*" class="jp.co.hitachi.a.c.tmp.action.Actmp01Action">
+			<param name="event">{1}</param>
+			<param name="gid">actmp01</param>
+			<param name="trans">{2}</param>
+			<result name="DISP">/jsp/ac/Actmp01.jsp</result>
+			<result name="TEMP01" type="redirectAction"></result>
+			<result name="TEMP02" type="redirectAction"></result>
+		</action>
+
+		<!-- プレイグランド -->
+		<action name="actmp02*_*" class="jp.co.hitachi.a.c.tmp.action.Actmp02Action">
+			<param name="event">{1}</param>
+			<param name="gid">actmp02</param>
+			<param name="trans">{2}</param>
+			<result name="DISP">/jsp/ac/Actmp02.jsp</result>
+			<result name="DOWNLOAD" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment; filename = ${fileName}</param>
+				<param name="bufferSize">1024</param>
+				<param name="contentLength">${ contentLength }</param>
+			</result>
+			<result name="TEMP02" type="redirectAction"></result>
+		</action>
+
+		<!-- プレイサンプル -->
+		<action name="actmp03*_*" class="jp.co.hitachi.a.c.tmp.action.Actmp03Action">
+			<param name="event">{1}</param>
+			<param name="gid">actmp03</param>
+			<param name="trans">{2}</param>
+			<result name="DISP">/jsp/ac/Actmp03.jsp</result>
+			<result name="SEARCH" >/jsp/ac/modal.jsp</result>
+			<result name="TEMP01" type="redirectAction"></result>
+			<result name="TEMP02" type="redirectAction"></result>
+		</action>
+<!-- //////////////////////////////////// ↑開発用↑ /////////////////////////////////////////////////////////////// -->
+	</package>
+
+	<!-- Add addition packages and configuration here. -->
+</struts>
