@@ -1,0 +1,78 @@
+jqueryでのモーダル画面作成　必要コード
+
+(1) 親画面
+・ struts2用jqueryプラグイン(別ページ参照)
+・ <sj:dialog id="任意ID" autoOpen="false" modal="true"/>
+	→なぜ<sj:dialog>として必要か検証しきれていないため保留。現状必須。
+	→autoOpen(自動展開)をfalse、modal(モーダル画面)をtrueは必須。
+・ form内に<div id="任意ID_2" title="" style='display:none;'></div>
+・ モーダルとして必要な項目(仮検索条件など)をform内に記載
+・ <input type="button" id="任意ID_button" value="任意" />
+
+(2) ダミーJSP
+・ form内にhiddenタグで親から引き継いだ値代入。
+	→hiddenでなくとも構わないが子画面読み込みの際に表示されるためhiddenがベターかと思われる。
+・ <s:token />で画面tokenを発行。
+・<script>でonload処理にて子画面へ。
+
+(3) 子画面
+・ 親画面での検索条件をvalueに代入する。(value="%{#DispBeanName.receive}"等)
+	→javascriptで代入可能かは不明（おそらく出来る）
+
+(4) JavaScript
+	�@ 親画面（"任意ID_button"が押された後の処理）
+	・ 送るパラメータの文字列生成
+		→ decodeを行わないと正しいParamが送れない
+	・ iframeのsrc要素にパラメータを付加したURLを設定する
+		→"ダミーjsp" + "?" + "parameter"
+	・ ダイアログ表示処理
+	�A ダミーJSP(onload処理)
+	・ 親画面からparam取得し、"?"除去等行いhiddenに代入
+	・ submitを行う
+	�B 子画面(モーダル閉じる)
+	・ window.parent.document.getElementById("任意親画面ID").valueに子画面内value、画面tokenを代入
+	・ window.parent.jQuery('#任意ID_2').dialog('close');にて画面閉じる。
+
+(5) Java
+	→ 特別な処理は必要なし。画面受け渡しに必要なIDなどをgetter,setter用意し、必要メソッドにてget,set行うのみ。
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+子画面共通化
+
+(1) 親画面
+
+■AmallContentsHeadParents.jsp
+・ struts2用jqueryプラグインを実装
+	→　includeで自動的に実装される
+
+■AmallFunc.jsp
+・ <sj:dialog id="jqueryDialog" autoOpen="false" modal="true"/>
+・ <div id="dialog-iframe" class='displaynone'></div>
+	→　IDは固定、こちらもincludeで自動的に実装される
+
+■各画面ID.jsp
+・ 親画面→子画面として必要な項目をform内に記載（コード値など）
+	→　以下の規定とする
+		nameは任意
+		idは
+			顧客検索：customerSearch
+			店舗検索：shopSearch
+			ユーザー検索：userSearch
+			店舗枝番検索：shopBranchSearch
+
+		owdidは
+			顧客検索：customerSearchNm
+			店舗検索：shopSearchNm
+			ユーザー検索：userSearchNm
+			店舗枝番検索：shopBranchSearchNm
+
+		owdbtnidは
+			顧客検索：customerSearchBtn
+			店舗検索：shopSearchBtn
+			ユーザー検索：userSearchBtn
+			店舗枝番検索：shopBranchSearchBtn
+
+
+	→　上記により検索エリア内の書き方は以下　※検索エリア内の各種検索ボタンの書き方はactmp02も参照のこと
+		<s:textfield type="searchArea" name="xxxxxx" id="customerSearch" owdid="customerSearchNm" owdbtnid="customerSearchBtn" owdrole="#DispBeanName.owdrole" cssClass="inputText01 w240 mr10 %{actmp02DispBean.getStyleClass('xxxxxx')}" btnCssClass="btnStyle01 mr10"></s:textfield>
