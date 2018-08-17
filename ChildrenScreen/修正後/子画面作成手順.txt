@@ -55,19 +55,19 @@ jqueryでのモーダル画面作成　必要コード
 ・ 親画面→子画面として必要な項目をform内に記載（コード値など）
 	→　以下の規定とする
 		nameは任意
-		idは
+		id(入力欄のID)は
 			顧客検索：customerSearch
 			店舗検索：shopSearch
 			ユーザー検索：userSearch
 			店舗枝番検索：shopBranchSearch
 
-		owdidは
+		owdid(名称エリアのID)は
 			顧客検索：customerSearchNm
 			店舗検索：shopSearchNm
 			ユーザー検索：userSearchNm
 			店舗枝番検索：shopBranchSearchNm
 
-		owdbtnidは
+		owdbtnid(子画面起動のボタンID)は
 			顧客検索：customerSearchBtn
 			店舗検索：shopSearchBtn
 			ユーザー検索：userSearchBtn
@@ -76,3 +76,8 @@ jqueryでのモーダル画面作成　必要コード
 
 	→　上記により検索エリア内の書き方は以下　※検索エリア内の各種検索ボタンの書き方はactmp02も参照のこと
 		<s:textfield type="searchArea" name="xxxxxx" id="customerSearch" owdid="customerSearchNm" owdbtnid="customerSearchBtn" owdrole="#DispBeanName.owdrole" cssClass="inputText01 w240 mr10 %{actmp02DispBean.getStyleClass('xxxxxx')}" btnCssClass="btnStyle01 mr10"></s:textfield>
+
+
+■起動JavaScript
+・common.jsに追加のJSを指定
+	→ 一度実装すれば各画面の実装の必要なし

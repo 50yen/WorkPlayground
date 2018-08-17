@@ -7,6 +7,6 @@
 -----------------------------------------------------------------------%>
 
 <%---- DialogModal画面 ---%>
-<sj:dialog id="anchordialogconfirm" autoOpen="false" modal="true" />
-<div id="dialog-iframe" title="" style='display: none;'></div>
+<sj:dialog id="jqueryDialog" autoOpen="false" modal="true"/>
+<div id="dialog-iframe" class='displaynone'></div>
 <%---- DialogModal画面 ---%>
