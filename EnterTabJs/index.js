@@ -198,8 +198,29 @@ $(function() {
             }
         }
     });
-});
 
+    // 初期フォーカス処理
+    setFirstFocus();
+});
+/****************************************************************
+ * @name 初期フォーカス設定処理
+ *
+ * @description
+ * 画面上のフォーム内の最初の入力可能項目にフォーカスをあてる
+ * onLoadに設定
+ *
+ * @param なし
+ * @return なし
+ ****************************************************************/
+var firstElm = "input:enabled:visible:not([readonly]),textarea:enabled:visible:not([readonly]),select:enabled:visible";
+$firstElm = $(firstElm);
+
+function setFirstFocus() {
+	// 画面が読み込まれる前に動かないように遅延処理
+	setTimeout(function(){
+        $(firstElm).filter(":first").focus();
+	}, 300);
+}
 function disp() {
 
     window.alert('アラートの表示');
