@@ -8,5 +8,7 @@
 
 <%---- DialogModal画面 ---%>
 <sj:dialog id="jqueryDialog" autoOpen="false" modal="true"/>
-<div id="dialog-iframe" class='displaynone'></div>
+<div id="dialog-iframe" class='displaynone'>
+	<iframe src="" id="iframe_contents"></iframe>
+</div>
 <%---- DialogModal画面 ---%>

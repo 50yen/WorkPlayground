@@ -42,13 +42,12 @@ jqueryでのモーダル画面作成　必要コード
 
 (1) 親画面
 
-■AmallContentsHeadParents.jsp
-・ struts2用jqueryプラグインを実装
-	→　includeで自動的に実装される
-
 ■AmallFunc.jsp
-・ <sj:dialog id="jqueryDialog" autoOpen="false" modal="true"/>
-・ <div id="dialog-iframe" class='displaynone'></div>
+以下のように変更
+<sj:dialog id="jqueryDialog" autoOpen="false" modal="true"/>
+<div id="dialog-iframe" class='displaynone'>
+	<iframe src="" id="iframe_contents"></iframe>
+</div>
 	→　IDは固定、こちらもincludeで自動的に実装される
 
 ■各画面ID.jsp
@@ -68,10 +67,10 @@ jqueryでのモーダル画面作成　必要コード
 			店舗枝番検索：shopBranchSearchNm
 
 		owdbtnid(子画面起動のボタンID)は
-			顧客検索：customerSearchBtn
-			店舗検索：shopSearchBtn
-			ユーザー検索：userSearchBtn
-			店舗枝番検索：shopBranchSearchBtn
+			顧客検索：customerSearchChildBtn
+			店舗検索：shopSearchChildBtn
+			ユーザー検索：userSearchChildBtn
+			店舗枝番検索：shopBranchSearchChildBtn
 
 
 	→　上記により検索エリア内の書き方は以下　※検索エリア内の各種検索ボタンの書き方はactmp02も参照のこと
@@ -80,4 +79,44 @@ jqueryでのモーダル画面作成　必要コード
 
 ■起動JavaScript
 ・common.jsに追加のJSを指定
-	→ 一度実装すれば各画面の実装の必要なし
+	→ 共通のOnLoad処理に組み込み
+		setChidlBtnEventを追加
+	→ 一度実装すれば各画面の実装の必要なし　※common_parts.js参照
+	→ actmp03.jsを削除
+
+・モーダルダミーのパスをjsp/ac/modaldummy.jspに変更
+	→　問題なく実行できるか？検証要
+
+・iframe_testのIDをiframe_contentsに変更
+・iframe_testのname属性は不要では？→削除した
+
+・open: function() {}内をid指定に変更
+　さらにloadを追加
+
+
+■modaldummy.jsp
+・場所をjsp配下に移動
+・target="modal"は意味ある？ →削除した
+・onload処理をiframeタグ側に変更 →検証要(ダミーから別jspに遷移した際に再実行されないか等)
+・最小構成に変更 ※修正後のmodaldummy.jsp参照
+
+
+■ダミー画面Onload
+起動アクションを「accom01DISP」にする（IDは仮）
+サブミット処理をamallSubmitWithoutDupcheckにする。
+	→自前は修正漏れが起きるため禁止
+
+■java側処理
+IDを決めて子画面のAction、Businessを作成する。（Actmp03ではないことは確か）
+struts.xmlの子画面用の部分を作成する
+どうやってダミーから値を渡している？
+現状名前を合わせているからできてしまっているだけ？
+
+■modal.jsp　
+・IDを決めて名称変更すること、
+・直書きのscriptなくすこと、closeDialogに名前変更
+	→common.jsに記載　※common_parts.js参照
+
+
+■子画面用jspのinclude部分について
+ちょっと修正 JQUERYがちゃんと使えるかは要検証
