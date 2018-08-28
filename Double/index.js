@@ -126,21 +126,28 @@ $(function() {
             $("#" + objId).prop('disabled', false);
         }
     });
+    var $dispObj = $('.dispOnOff');
+
+    var dispFunc = function() {
 
 
-});
-$('.dispOnOff').on('load',function() {
-    var dispVal = $(this).val();
-    var dispId = $(this).attr('id');
-    var objId = dispId + "edit";
-    console.log(dispVal);
-    console.log(objId);
+        var dispVal = $dispObj.val();
 
-    if(dispVal == "0"){
-        $("#" + objId).prop('disabled', true);
-    } else {
-        $("#" + objId).prop('disabled', false);
-    }
+
+        var dispId = $dispObj.attr('id');
+        var objId = dispId + "edit";
+        console.log(dispVal);
+        console.log(dispId);
+        console.log(objId);
+
+        if(dispVal == "0"){
+            $("#" + objId).prop('disabled', true);
+        } else {
+            $("#" + objId).prop('disabled', false);
+        }
+    };
+
+    dispFunc();
 });
 
 
