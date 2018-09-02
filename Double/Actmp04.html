@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=980" />
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<title>VEDS NAVI</title>
+		<link href="../../jsp/css/ass_navi2.css" rel="stylesheet" media="all">
+		<link href="../../jsp/css/print.css" rel="stylesheet" media="print">
+		<link href="../../jsp/css/common.css" rel="stylesheet">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	 	<script src="../../jsp/js/loadingoverlay.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<div class="mainWrap">
+					<div class="header-logo" onclick="amallSubmit(0,'actop01DISP');">
+						VEDS NAVI
+					</div>
+					<div class="header-login">
+						<ul>
+							<li>
+								<img src="../../jsp/images/icon_login.png" class="mr5" width="28" height="28" alt="">
+							</li>
+							<li>(株)アサヒ商事様</li>
+							<li class="pl10">
+								<input class="btnStyle02 ml5" value="マニュアル" type="button" onclick="manualOpen('');"></li>
+							<li class="pl10">
+								<input class="btnStyle02 ml5" value="ログアウト" type="button" onclick="amallSubmit(0,'actop01LOGOUT');">
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="main">
+				<div class="menu">
+					<ul>
+						<li>
+							<img src="../../jsp/images/icon_side_01.png" width="30" height="30" alt="">
+							<div class="categoryLink" onclick="amallSubmit(0,'');">入力</div>
+						</li>
+					</ul>
+				</div>
+				<div class="mainWrap">
+					<div class="main">
+						<div>
+							<div class="title mb10">
+								<h1>お試し場</h1>
+							</div>
+							<div class="title-id">abc-efg-actmp04　2018/09/01 08:24:30</div>
+						</div>
+						<div class="pt20">
+							<div class="clear">
+								<div class="accordion-seach">
+									<div class="ac-content">
+										<label for="seacrh-label">▼&nbsp; 検索</label>
+										<input id="seacrh-label" type="checkbox" class="displaynone" checked="checked">
+										<div class="ac-cont">
+											<div class="seach-area">
+												<div class="seach-line w80">回収日</div>
+												<div class="seach-line">
+													<input type="text" value="" class="inputText01 w240 mr10"/>
+												</div>
+											</div>
+											<div class="taR">
+												<input type="button" class="btn_green" value="検索"></input>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="childrenTableAreaId" class="mt10 table-children-area y-scroll-box">
+							<table class="tableStyle02">
+								<colgroup>
+									<col>
+									<col>
+									<col>
+									<col>
+								</colgroup>
+								<tbody>
+									<tr>
+										<th>項目１</th>
+										<th>項目２</th>
+										<th>項目３</th>
+										<th>項目４</th>
+									</tr>
+										<td>項目内容１</td>
+										<td>項目内容２</td>
+										<td>項目内容３</td>
+										<td>項目内容４</td>
+									<tr>
+										<td>項目内容１</td>
+										<td>項目内容２</td>
+										<td>項目内容３</td>
+										<td>項目内容４</td>
+									</tr>
+									<tr>
+										<td>項目内容１</td>
+										<td>項目内容２</td>
+										<td>項目内容３</td>
+										<td>項目内容４</td>
+									</tr>
+									<tr>
+										<td>項目内容１</td>
+										<td>項目内容２</td>
+										<td>項目内容３</td>
+										<td>項目内容４</td>
+									</tr>
+									<tr>
+										<td>項目内容１</td>
+										<td>項目内容２</td>
+										<td>項目内容３</td>
+										<td>項目内容４</td>
+									</tr>
+									<tr>
+										<td>項目内容１</td>
+										<td>項目内容２</td>
+										<td>項目内容３</td>
+										<td>項目内容４</td>
+									</tr>
+									<tr>
+										<td>項目内容１</td>
+										<td>項目内容２</td>
+										<td>項目内容３</td>
+										<td>項目内容４</td>
+									</tr>
+									<tr>
+										<td>項目内容１</td>
+										<td>項目内容２</td>
+										<td>項目内容３</td>
+										<td>項目内容４</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div id="childrenBtnAreaId" class="btn-area button-children-footer">
+							<div class="btn-left">
+								<input type="button" class="btnStyle01" value="閉じる" onclick="check();"></input>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<div class="mainWrap">
+					<div class="footer-container">Copyright 2018 (C) Asahi Security Co.Ltd.,All Rights Reserved. </div>
+				</div>
+			</div>
+			<script src="../../jsp/js/common.js"></script>
+		</div>
+	</body>
+</html>

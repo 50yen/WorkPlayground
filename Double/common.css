@@ -1,0 +1,63 @@
+@charset "UTF-8";
+/****************************************************************
+ * クロスブラウザ対応CSS
+ ****************************************************************/
+*:focus {
+	outline: none;
+}
+/****************************************************************
+ * 親画面用CSS
+ ****************************************************************/
+.seach-title {
+	float: left;
+	height: 60px;
+	width: 80px;
+	padding-right: 10px;
+}
+
+.seach-title-inline {
+	display: inline-block;
+	width: 80px;
+	padding-right: 10px;
+}
+.table-children-area {
+	height: 0px;
+}
+.button-children-footer {
+	position: absolute;
+	bottom: 33px;
+	background-color: red;
+}
+.y-scroll-box {
+	overflow-y: auto;
+	overflow-x: none;
+}
+
+/****************************************************************
+ * 子画面用CSS
+ ****************************************************************/
+.ui-dialog-titlebar {
+	display: none;
+}
+
+/****************************************************************
+ * Hitachi Document 調整 CSS
+ ****************************************************************/
+.seach-area {
+	line-height: 2;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.menu div.submenu li>div.middleMenu {
+	left: 10px !important;
+}
+
+.menu div.submenu li>div.smallMenu {
+	left: 10px !important;
+	cursor: pointer;
+}
+
+.menu div.categoryLink {
+	cursor: pointer;
+}
