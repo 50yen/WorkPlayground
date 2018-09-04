@@ -1,0 +1,40 @@
+Create table N_CST_GRP_M(
+CST_GRP_CD VARCHAR2(10),
+CST_CD VARCHAR2(10)
+);
+
+Create table N_CST_M(
+CST_CD VARCHAR2(10),
+CST_NM VARCHAR2(100)
+);
+
+
+Create table N_USER_M (
+USER_ID VARCHAR2(10),
+CST_GRP_CD VARCHAR2(10)
+);
+
+
+insert into N_CST_GRP_M values ('01','0001');
+insert into N_CST_GRP_M values ('01','0002');
+insert into N_CST_GRP_M values ('01','0003');
+insert into N_CST_GRP_M values ('02','0004');
+insert into N_CST_GRP_M values ('02','0005');
+insert into N_CST_GRP_M values ('02','0002');
+insert into N_CST_GRP_M values ('03','0005');
+insert into N_CST_GRP_M values ('03','0006');
+
+
+insert into N_CST_M values ('0001','東支店');
+insert into N_CST_M values ('0002','まいばすけっと');
+insert into N_CST_M values ('0003','イオンモール');
+insert into N_CST_M values ('0004','イオン城東店');
+insert into N_CST_M values ('0005','西支店');
+insert into N_CST_M values ('0006','ドンキ西支店');
+insert into N_CST_M values ('0007','ドンキホーテ');
+
+
+insert into N_USER_M values ('A','01');
+insert into N_USER_M values ('B','02');
+insert into N_USER_M values ('C','03');
+insert into N_USER_M values ('D','01');

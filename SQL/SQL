@@ -1,0 +1,39 @@
+select
+	A.USER_ID
+	,B.CST_NM
+FROM
+	N_USER_M A
+	INNER JOIN
+		N_CST_M B
+		ON
+		A.CST_CD = B.CST_CD
+WHERE
+	A.CST_GRP_CD IN （
+					SELECT
+						ncgm.CST_GRP_CD
+ 					FROM
+						N_CST_GRP_M ncgm
+					WHERE
+						EXISTS　(
+								select
+										CST_CD
+								FROM
+										N_CST_M ncm
+									WHERE
+										ncgm.CST_CD = ncm.CST_CD
+									AND
+									ncm.CST_CD IN ('0001','0002','0003','0005')
+								AND
+									ncm.CST_CD like '%3'
+								AND
+									ncm.CST_NM like '%イオ%'
+							)
+						 GROUP BY ncgm.CST_GRP_CD
+	)
+	OR (
+		A.CST_CD like '%3'
+		AND
+		B.CST_NM like '%店%'
+		AND
+		A.CST_CD IN ('0002','0003','0005')
+	)
